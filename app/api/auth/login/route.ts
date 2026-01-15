@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from "next/server";
 import { getAdminByUsername } from "@/lib/models";
 import { verifyPassword, generateToken, setAuthCookie } from "@/lib/auth";
