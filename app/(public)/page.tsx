@@ -4,11 +4,18 @@ import { About } from '@/components/public/About';
 import { TechStack } from '@/components/public/TechStack';
 import { Qualifications } from '@/components/public/Qualifications';
 import { Projects } from '@/components/public/Projects';
-import { serverApiRequest } from '@/lib/api';
 
 async function getProfile() {
   try {
-    const data = await serverApiRequest<{ profile: any }>('/api/profile');
+    const res = await fetch('/api/profile', {
+      cache: 'no-store',
+    });
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch profile');
+    }
+
+    const data = await res.json();
     return data.profile;
   } catch (error) {
     return null;
