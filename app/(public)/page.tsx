@@ -7,7 +7,7 @@ import { Projects } from '@/components/public/Projects';
 
 async function getProfile() {
   try {
-    const res = await fetch('/api/profile/public', {
+    const res = await fetch('/api/profile', {
       cache: 'no-store',
     });
 
