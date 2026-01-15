@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { NextRequest, NextResponse } from 'next/server';
 import { adminExists, createAdmin } from '@/lib/models';
 import { hashPassword } from '@/lib/auth';
