@@ -4,7 +4,9 @@ import { getAllQualifications } from '@/lib/models';
 
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
+    // Extract search params from the request URL
+    const url = new URL(request.url);
+    const searchParams = url.searchParams;
     const publishedOnly = searchParams.get('published') !== 'false';
 
     const qualifications = await getAllQualifications(publishedOnly);
