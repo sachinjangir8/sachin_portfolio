@@ -1,5 +1,7 @@
+import { ObjectId } from "mongodb";
+
 export interface Admin {
-  _id?: string;
+  _id?: ObjectId;
   username: string;
   password: string;
   email?: string;
@@ -10,7 +12,7 @@ export interface Admin {
 }
 
 export interface Category {
-  _id?: string;
+  _id?: ObjectId;
   name: string;
   slug: string;
   description?: string;
@@ -19,11 +21,11 @@ export interface Category {
 }
 
 export interface Project {
-  _id?: string;
+  _id?: ObjectId;
   title: string;
   description: string;
   techStack: string[];
-  category: string; // Category ID
+  category: ObjectId | string;   // Mongo stores ObjectId, frontend can use string
   liveDemoLink?: string;
   githubLink?: string;
   images: string[];
@@ -33,7 +35,7 @@ export interface Project {
 }
 
 export interface Profile {
-  _id?: string;
+  _id?: ObjectId;
   githubLink?: string;
   linkedinLink?: string;
   twitterLink?: string;
@@ -45,38 +47,31 @@ export interface Profile {
 }
 
 export interface Qualification {
-  _id?: string;
+  _id?: ObjectId;
   title: string;
   issuer: string;
-  issueDate: string; // YYYY-MM-DD format
-  expiryDate?: string; // YYYY-MM-DD format (optional)
-  credentialId?: string; // Certificate ID or verification code
-  credentialUrl?: string; // Link to verify/view certificate
-  certificateImage?: string; // URL to certificate image
+  issueDate: string;
+  expiryDate?: string;
+  credentialId?: string;
+  credentialUrl?: string;
+  certificateImage?: string;
   description?: string;
-  type: 'education' | 'certification' | 'award'; // Type of qualification
+  type: 'education' | 'certification' | 'award';
   isPublished: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export interface TechStack {
-  _id?: string;
+  _id?: ObjectId;
   name: string;
   category: 'frontend' | 'backend' | 'data-science' | 'devops' | 'mobile' | 'ui-ux' | 'other';
   level: 'beginner' | 'intermediate' | 'advanced' | 'expert';
   yearsExperience?: number;
   description?: string;
-  icon?: string; // e.g. devicon class, emoji, or short label
+  icon?: string;
   isFeatured?: boolean;
   order?: number;
   createdAt?: Date;
   updatedAt?: Date;
-}
-
-export interface AuthRequest extends Request {
-  admin?: {
-    id: string;
-    username: string;
-  };
 }

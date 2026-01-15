@@ -65,8 +65,10 @@ export async function createCategory(category: Omit<Category, '_id'>): Promise<C
     createdAt: new Date(),
     updatedAt: new Date(),
   } as Category);
-  return { ...category, _id: result.insertedId.toString() } as Category;
+
+  return { ...category, _id: result.insertedId } as Category;
 }
+
 
 export async function updateCategory(id: string, updates: Partial<Category>): Promise<void> {
   const db = await getDb();
@@ -118,8 +120,10 @@ export async function createProject(project: Omit<Project, '_id'>): Promise<Proj
     createdAt: new Date(),
     updatedAt: new Date(),
   } as Project);
-  return { ...project, _id: result.insertedId.toString() } as Project;
+
+  return { ...project, _id: result.insertedId } as Project;
 }
+
 
 export async function updateProject(id: string, updates: Partial<Project>): Promise<void> {
   const db = await getDb();
@@ -204,8 +208,10 @@ export async function createQualification(qualification: Omit<Qualification, '_i
     createdAt: new Date(),
     updatedAt: new Date(),
   } as Qualification);
-  return { ...qualification, _id: result.insertedId.toString() } as Qualification;
+
+  return { ...qualification, _id: result.insertedId } as Qualification;
 }
+
 
 export async function updateQualification(id: string, updates: Partial<Qualification>): Promise<void> {
   const db = await getDb();
@@ -255,8 +261,9 @@ export async function createTechStack(stack: Omit<TechStack, '_id'>): Promise<Te
     updatedAt: new Date(),
   } as TechStack);
 
-  return { ...stack, _id: result.insertedId.toString() } as TechStack;
+  return { ...stack, _id: result.insertedId } as TechStack;
 }
+
 
 export async function updateTechStack(id: string, updates: Partial<TechStack>): Promise<void> {
   const db = await getDb();
