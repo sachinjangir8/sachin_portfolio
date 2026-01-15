@@ -87,6 +87,15 @@ export default function LoginPage() {
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </button>
+            <div className="mt-4 text-center">
+              <button
+                type="button"
+                onClick={() => router.push('/admin/forgot-password')}
+                className="text-sm text-primary-600 dark:text-primary-400 hover:underline"
+              >
+                Forgot password?
+              </button>
+            </div>
           </div>
         </form>
       </div>

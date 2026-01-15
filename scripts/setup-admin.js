@@ -1,8 +1,3 @@
-/**
- * Setup script to create the first admin account
- * Usage: node scripts/setup-admin.js <username> <password>
- */
-
 const { MongoClient } = require('mongodb');
 const bcrypt = require('bcryptjs');
 require('dotenv').config({ path: '.env.local' });
@@ -26,20 +21,19 @@ async function setupAdmin() {
 
   try {
     await client.connect();
-    const db = client.db('portfolio');
+
+    // 🔥 FIX HERE
+    const db = client.db(); 
     const adminsCollection = db.collection('admins');
 
-    // Check if admin already exists
     const existingAdmin = await adminsCollection.findOne({});
     if (existingAdmin) {
       console.error('Error: An admin account already exists.');
       process.exit(1);
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create admin
     const result = await adminsCollection.insertOne({
       username,
       password: hashedPassword,

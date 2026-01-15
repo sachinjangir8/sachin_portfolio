@@ -2,6 +2,9 @@ export interface Admin {
   _id?: string;
   username: string;
   password: string;
+  email?: string;
+  resetOtp?: string;
+  resetOtpExpires?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }

@@ -27,6 +27,20 @@ export async function adminExists(): Promise<boolean> {
   return count > 0;
 }
 
+export async function getFirstAdmin(): Promise<Admin | null> {
+  const db = await getDb();
+  return await db.collection<Admin>(COLLECTIONS.ADMINS).findOne({});
+}
+
+export async function updateAdminById(id: string, updates: Partial<Admin>): Promise<void> {
+  const db = await getDb();
+  const { ObjectId } = await import('mongodb');
+  await db.collection<Admin>(COLLECTIONS.ADMINS).updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { ...updates, updatedAt: new Date() } }
+  );
+}
+
 // Category Model
 export async function getAllCategories(): Promise<Category[]> {
   const db = await getDb();
