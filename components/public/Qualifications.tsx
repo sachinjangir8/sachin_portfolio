@@ -20,7 +20,22 @@ interface Qualification {
   isPublished: boolean;
 }
 
-export function Qualifications() {
+const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
+  export function Qualifications() {
   const [qualifications, setQualifications] = useState<Qualification[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedType, setSelectedType] = useState<string>('all');
@@ -75,10 +90,14 @@ export function Qualifications() {
 
   if (loading) {
     return (
-      <section id="qualifications" className="py-20 px-4 bg-gray-50 dark:bg-gray-800">
+      <section id="qualifications" className="py-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-600"></div>
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+              className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full"
+            />
           </div>
         </div>
       </section>
@@ -86,94 +105,119 @@ export function Qualifications() {
   }
 
   return (
-    <section id="qualifications" className="py-20 px-4 bg-gray-50 dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto">
+    <section id="qualifications" className="py-20 px-4 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900">
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="max-w-7xl mx-auto"
+      >
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-4"
+          variants={item}
+          className="text-4xl font-bold text-center text-gray-900 dark:text-white mb-4 pb-2 relative"
         >
           Qualifications & Certificates
+          <motion.div 
+            className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full"
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          />
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
+          variants={item}
           className="text-center text-gray-600 dark:text-gray-400 mb-12"
         >
           My educational background, professional certifications, and achievements
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
+          variants={item}
           className="flex flex-wrap justify-center gap-4 mb-12"
         >
-          <button
+          <motion.button
             onClick={() => setSelectedType('all')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`px-6 py-2 rounded-full transition-colors ${
               selectedType === 'all'
-                ? 'bg-primary-600 text-white'
+                ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
             All ({qualifications.length})
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => setSelectedType('education')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`px-6 py-2 rounded-full transition-colors ${
               selectedType === 'education'
-                ? 'bg-primary-600 text-white'
+                ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
             Education ({groupedByType.education.length})
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => setSelectedType('certification')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`px-6 py-2 rounded-full transition-colors ${
               selectedType === 'certification'
-                ? 'bg-primary-600 text-white'
+                ? 'bg-gradient-to-r from-green-500 to-green-600 text-white shadow-lg'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
             Certifications ({groupedByType.certification.length})
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             onClick={() => setSelectedType('award')}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             className={`px-6 py-2 rounded-full transition-colors ${
               selectedType === 'award'
-                ? 'bg-primary-600 text-white'
+                ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-white shadow-lg'
                 : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
             }`}
           >
             Awards ({groupedByType.award.length})
-          </button>
+          </motion.button>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div 
+          variants={container}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {filteredQualifications.length === 0 ? (
-            <div className="col-span-full text-center text-gray-500 dark:text-gray-400">
+            <motion.div 
+              variants={item}
+              className="col-span-full text-center text-gray-500 dark:text-gray-400 py-12"
+            >
               No qualifications found in this category.
-            </div>
+            </motion.div>
           ) : (
             filteredQualifications.map((qualification, index) => (
               <motion.div
                 key={qualification._id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                variants={item}
+                initial="hidden"
+                whileInView="show"
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+                whileHover={{ y: -10 }}
+                className="bg-white dark:bg-gray-900 rounded-xl shadow-lg p-6 hover:shadow-2xl transition-all duration-300 border border-gray-100 dark:border-gray-800"
               >
                 <div className="flex items-start justify-between mb-4">
-                  <div className={`p-3 rounded-lg ${getTypeColor(qualification.type)}`}>
+                  <motion.div 
+                    className={`p-3 rounded-lg ${getTypeColor(qualification.type)}`}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.2 }}
+                  >
                     {getTypeIcon(qualification.type)}
-                  </div>
+                  </motion.div>
                   <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getTypeColor(qualification.type)}`}>
                     {qualification.type.charAt(0).toUpperCase() + qualification.type.slice(1)}
                   </span>
@@ -212,9 +256,11 @@ export function Qualifications() {
 
                 <div className="flex flex-wrap gap-2">
                   {qualification.certificateImage && (
-                    <button
+                    <motion.button
                       onClick={() => setSelectedImage({ url: qualification.certificateImage!, title: qualification.title })}
-                      className="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-md transition-colors"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-primary-700 rounded-md transition-colors"
                     >
                       {qualification.certificateImage.toLowerCase().includes('.pdf') ? (
                         <>
@@ -227,25 +273,27 @@ export function Qualifications() {
                           View Certificate
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   )}
                   {qualification.credentialUrl && (
-                    <a
+                    <motion.a
                       href={qualification.credentialUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
                       className="inline-flex items-center px-3 py-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 border border-primary-600 dark:border-primary-400 rounded-md transition-colors"
                     >
                       <FiExternalLink className="mr-2 h-4 w-4" />
                       Verify
-                    </a>
+                    </motion.a>
                   )}
                 </div>
               </motion.div>
             ))
           )}
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Image Modal */}
       <ImageModal

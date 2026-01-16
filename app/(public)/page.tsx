@@ -5,14 +5,9 @@ import { TechStack } from '@/components/public/TechStack';
 import { Qualifications } from '@/components/public/Qualifications';
 import { Projects } from '@/components/public/Projects';
 
-const BASE_URL =
-  process.env.NEXT_PUBLIC_APP_URL ||
-  (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
-  'http://localhost:3000';
-
 async function getProfile() {
   try {
-    const res = await fetch(`${BASE_URL}/api/profile/public`, {
+    const res = await fetch('/api/profile', {
       cache: 'no-store',
     });
 
@@ -23,7 +18,6 @@ async function getProfile() {
     const data = await res.json();
     return data.profile;
   } catch (error) {
-    console.error('Profile fetch failed:', error);
     return null;
   }
 }
